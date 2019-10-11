@@ -11,6 +11,7 @@
 		"terminal.integrated.shell.linux": "/bin/bash",
 		"python.pythonPath": "/usr/local/bin/python",
 		"python.linting.enabled": true,
+		
 		"python.linting.pylintEnabled": true,
 		"python.linting.pylintPath": "/usr/local/bin/pylint"
 	},
@@ -19,12 +20,15 @@
 	// "appPort": [],
 
 	// Uncomment the next line to run commands after the container is created.
-	"postCreateCommand": "service redis-server start",
+	"postCreateCommand": "service redis-server start; mkdir -p /root/.ssh && cp -r /root/.ssh-localhost/* /root/.ssh && chmod 700 /root/.ssh && chmod 600 /root/.ssh/*",
 
 	// Uncomment the next line to use a non-root user. On Linux, this will prevent
 	// new files getting created as root, but you may need to update the USER_UID
 	// and USER_GID in .devcontainer/Dockerfile to match your user if not 1000.
 	// "runArgs": [ "-u", "vscode" ],
+	"runArgs": [
+		"-v", "${env:HOME}${env:USERPROFILE}/.ssh:/root/.ssh-localhost:ro",
+	]
 
 	"extensions": [
 		"ms-python.python"
